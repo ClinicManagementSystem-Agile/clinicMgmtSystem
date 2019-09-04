@@ -1,1 +1,3 @@
-# Clinic_Management_System
+# Clinic Management System
+
+This is an online web application to book and register patients.
