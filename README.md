@@ -1,1 +1,1 @@
-# Clinic_Management_System
+# ClinicManagement System
