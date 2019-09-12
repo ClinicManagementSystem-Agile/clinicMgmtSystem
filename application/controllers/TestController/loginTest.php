@@ -9,21 +9,27 @@ class Logintest extends CI_Controller {
             $this->load->library('unit_test');
             //load model
             
-          
+            $this->load->library('cart');
             $this->load->helper('url');  
             $this->load->helper('form');  
             $this->load->library('session');
             $this->load->database();
-            $this->load->model('Login_Model','login');
+            $this->load->model('test/User_model','login');
 
-        } public function verify(){
+        } 
+        
+        public function verify(){
             echo" Login Test1<br/>";
-            $email="srijal.fantastic@gmail.com";
-            echo "Email:'$email'<br/>";
-            $password= md5("nepal");
+            $username="s2018cherry";
+            echo "username:'$username'<br/>";
+            $password= md5("admin");
             echo "Password:'$password'";
+            $cond = array(
+                'username'=>$username,
+                'password'=>$password
+                );
 
-            $test=$this->login->verify($email,$password);
+            $test=$this->login->login($cond);
             $expected_result=true;
            
             $test_name="Login Test 1";
@@ -31,12 +37,16 @@ class Logintest extends CI_Controller {
             echo $this->unit->run($test,$expected_result,$test_name);
 
             echo" Login Test2<br/>";
-            $email="srijal.fantastic@gmail.com";
-            echo "Email:'$email'<br/>";
-            $password= "nepal";
+            $username="s2018cherry";
+            echo "username:'$username'<br/>";
+            $password= "admin";
             echo "Password:'$password'";
+            $cond = array(
+                'username'=>$username,
+                'password'=>$password
+                );
 
-            $test=$this->login->verify($email,$password);
+            $test=$this->login->login($cond);
             $expected_result=true;
            
             $test_name="Login Test 2";
