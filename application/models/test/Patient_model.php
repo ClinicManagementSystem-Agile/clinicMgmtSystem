@@ -11,4 +11,10 @@ class Patient_model extends CI_Model {
         $this->db->insert('patient', $data);
         return true;
     }
+    function update_patient($data,$id)
+	{
+        $this->db->where('id',$id);
+        $this->db->update('patient', $data);
+        return true;
+    }
 }

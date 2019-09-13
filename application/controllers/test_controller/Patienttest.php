@@ -50,6 +50,39 @@ class Patienttest extends CI_Controller {
 
           
         }
+        public function update(){
+                echo" Patient Update<br/>";
+                $register_date = date('Y-m-d');
+    
+               $data = array(
+                 
+                    'first_name'=>'Srijal',
+                    'last_name'=>'Nepal',
+                    'dob'=>'1998-02-21',
+                    'age'=>'22',
+                    'gender'=>'M',
+                    'phone'=>'93939',
+                    'email'=>'a@test.com',
+                    'address'=>'Ktm',
+                    'spouse_name'=>'',
+                    'spouse_phone'=>'',
+                    'spouse_age'=>'',
+                    'allergy'=>'',
+                    'remark'=>'desc',
+                    'register_date'=> $register_date,
+                    'status'=>'1',
+                    'photo' => isset($photo)? $photo:'',
+                    'spouse_photo' => isset($spouse_photo)? $spouse_photo:'',
+                    );
+    
+               $test= $this->patient->update_patient($data,'1584552');
+                $expected_result=true;
+               
+                $test_name="Update Patient Test Case";
+              
+                echo $this->unit->run($test,$expected_result,$test_name);  
+            }
+
         
 }
 
