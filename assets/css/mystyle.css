@@ -1,0 +1,23 @@
+label {color:#000 !important; font-weight:600 !important;}
+textarea.form-control {border: solid #ccc 1px !important;}
+input[type='button'],input[type='submit'], .btn-primary, .btn-danger, .btn-info, btn-success {color:#fff !important;}
+a, a:hover, a:focus {color: #009688;}
+.green{color:#33cc66;}.red, .err, .red:hover{color:#F44336;}
+.print {display: none;}
+.flt-right{text-align:center;}
+@media print {
+section, section .content {width:99%; margin:0px 5px 0px 0px !important; padding:0px 0px 0px 0px !important; left:-5px;}
+.table-responsive, .table-responsive-m {width:99%; overflow-x:hidden;}
+.noprint {display: none; visibility: hidden;}
+.print {display: block; text-align: left; margin:0px 5px; padding:0px 20px; max-width:220mm; font-size:11px;}
+table {margin:0 5px;}
+.print table tr th, .print table tr td {border:hidden !important;}
+a[href]:after {content: none !important;}
+mar_left{padding:0 15px;}
+.item-row, .total-line, .total-value {text-align: left;}
+.print h3 {margin:0; padding:0;}
+.print img {margin:0; padding:0;}
+.flt-right{float:right;}
+}
+div .slimScrollDiv {min-height:800px !important; oveflow:auto !important;}
+
