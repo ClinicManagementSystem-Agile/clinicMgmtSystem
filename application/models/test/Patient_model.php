@@ -5,10 +5,7 @@ class Patient_model extends CI_Model {
 		parent::__construct();
 		$this->load->library('upload');
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> master
     function save_patient($data)
 	{
         $this->db->insert('patient', $data);
@@ -19,7 +16,6 @@ class Patient_model extends CI_Model {
         $this->db->where('id',$id);
         $this->db->update('patient', $data);
         return true;
-<<<<<<< HEAD
 	}
 	function show_patient($id)
 	{
@@ -28,7 +24,14 @@ class Patient_model extends CI_Model {
 	$this->db->show('patient');
 	return true;
 	}
-=======
+
+	function del_patient($id)
+	{
+		$this->db->where('id',$id);
+		$this->db->limit(1);
+		$this->db->delete('patient');
+		return true;
+	}
+	
     }
->>>>>>> master
 }
