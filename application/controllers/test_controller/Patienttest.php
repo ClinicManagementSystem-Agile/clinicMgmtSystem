@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 class Patienttest extends CI_Controller {
-
         public function __construct()
 	{
             parent::__construct();
@@ -15,11 +13,9 @@ class Patienttest extends CI_Controller {
             $this->load->library('session');
             $this->load->database();
             $this->load->model('test/Patient_model','patient');
-
         } public function add(){
             echo" Patient Add<br/>";
             $register_date = date('Y-m-d');
-
            $data = array(
                 'id'=>'1584552',
 		'first_name'=>'Srijal',
@@ -40,14 +36,12 @@ class Patienttest extends CI_Controller {
 		'photo' => isset($photo)? $photo:'',
 		'spouse_photo' => isset($spouse_photo)? $spouse_photo:'',
 		);
-
            $test= $this->patient->save_patient($data);
             $expected_result=true;
            
             $test_name="Add Patient Test Case";
           
             echo $this->unit->run($test,$expected_result,$test_name);
-
           
         }
         public function update(){
@@ -83,8 +77,25 @@ class Patienttest extends CI_Controller {
                 echo $this->unit->run($test,$expected_result,$test_name);  
             }
 
+            public function show()
+            {
+                echo" View patient<br/>";
+                $test= $this->patient->show_patient('1584552');
+                $expected_result=true;
+               
+                $test_name="View Patient Test Case";
+                echo $this->unit->run($test,$expected_result,$test_name);
+
+            }
+	     public function delete()
+            {
+                echo" Delete patient<br/>";
+                $test= $this->patient->del_patient('1584552');
+                $expected_result=true;
+               
+                $test_name="Delete Patient Test Case";
+                echo $this->unit->run($test,$expected_result,$test_name);
+
+            }	
         
 }
-
-
-
