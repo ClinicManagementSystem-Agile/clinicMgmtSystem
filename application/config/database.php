@@ -77,10 +77,10 @@ $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 
-	'username' => 'cliic',
+	'username' => 'root',
 	'password' => '',
 
-	'database' => 'clinic',
+	'database' => 'soft_clinic',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
