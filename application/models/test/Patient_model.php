@@ -16,6 +16,11 @@ class Patient_model extends CI_Model {
         $this->db->where('id',$id);
         $this->db->update('patient', $data);
         return true;
+<<<<<<< HEAD
+    }
+
+    function del_patient($id)
+=======
 	}
 	function show_patient($id)
 	{
@@ -26,12 +31,16 @@ class Patient_model extends CI_Model {
 	}
 
 	function del_patient($id)
+>>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
 	{
 		$this->db->where('id',$id);
 		$this->db->limit(1);
 		$this->db->delete('patient');
 		return true;
 	}
+<<<<<<< HEAD
+=======
 	
     }
+>>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
 }

@@ -49,6 +49,13 @@ class User_model extends CI_Model {
             return false;
         }
 	}
+	function get_dept_by_id($id)
+	{
+		$this->db->where('id',$id);
+		$query = $this->db->get('department');
+		$result = $query->row();
+		return $result;
+	}
 	
 
 }

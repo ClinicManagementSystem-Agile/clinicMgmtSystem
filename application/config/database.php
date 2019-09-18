@@ -80,7 +80,11 @@ $db['default'] = array(
 	'username' => 'root',
 	'password' => '',
 
+<<<<<<< HEAD
+	'database' => 'soft_clinic',
+=======
 	'database' => 'softwarica_clinic',
+>>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
