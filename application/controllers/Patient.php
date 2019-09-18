@@ -6,13 +6,18 @@ class Patient extends MY_Controller {
 	{
 		parent::__construct();
 		$this->load->model('patient_model', 'patient');
+<<<<<<< HEAD
        
+=======
+      
+>>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
         $this->load->library('numbertowords');
 
         //$this->load->model('vital_model', 'vital');
 		if (!$this->session->userdata('loggedin')) {redirect('user/user_login');}
 		$this->data['user'] = $this->session->userdata['loggedin'];
 	}
+<<<<<<< HEAD
 	public function index()
 	{
 		$this->data['patients']=$this->patient->get_patients();
@@ -56,6 +61,9 @@ class Patient extends MY_Controller {
         $this->load->view('frame', $this->data);
     }
 
+=======
+	
+>>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
 	public function add_patient($id=NULL)
 	{
 		$this->data['error']='';
@@ -88,6 +96,7 @@ echo $id;
 $this->patient->upload_photo_patient($filename,$id);
 
 }
+<<<<<<< HEAD
 
 	
 function checknum()
@@ -103,6 +112,9 @@ function checknum()
             $this->output->set_output(json_encode($numdetail));
         }
     }
+=======
+	
+>>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
 	public function save_patient($id=NULL)
 	{
 		//$error = '';
@@ -189,6 +201,7 @@ function checknum()
 		}
 	}
 	
+<<<<<<< HEAD
 	function delete_file($id) {
            
         if ($this->patient->delete_file($id)) {
@@ -240,5 +253,8 @@ function checknum()
         }
 	}
 
+=======
+	
+>>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
 	
 }
