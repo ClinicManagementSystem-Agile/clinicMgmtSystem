@@ -13,5 +13,5 @@ class Doctor_model extends CI_Model {
         }
         else{return false;}
     }
-Chat Conversation End
-Type a message...
+
+}
