@@ -50,3 +50,30 @@ class Doctortest extends CI_Controller {
           
             echo $this->unit->run($test,$expected_result,$test_name);          
         }
+
+        public function update(){
+            echo" doctor Update<br/>";
+            $data = array(
+                'first_name'=>'Dr. Asish ',
+                'last_name'=>'Ghimire',
+                'dob'=>'1997-02-15',
+                'gender'=>'Male',
+                'speciality'=>'Surgeon',
+                'phone'=>'9852566555',
+                'email'=>'asish@doc.com',
+                'address'=>'Kathmandu',
+                'website'=>'www.asish.doc.com',
+                'commission_service'=>'500',
+                'commission_lab'=>'250',
+                'commission_pharmacy'=>'250',
+                'status'=>'1',
+                'photo'=> 'abc.img'
+                );
+
+           $test= $this->doctor->update_doctor($data,'3');
+            $expected_result=true;
+           
+            $test_name="Update doctor Test Case";              
+            echo $this->unit->run($test,$expected_result,$test_name);            
+        }
+    }
