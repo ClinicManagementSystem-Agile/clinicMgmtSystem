@@ -13,5 +13,13 @@ class Doctor_model extends CI_Model {
         }
         else{return false;}
     }
-Chat Conversation End
-Type a message...
+
+    function update_doctor($data,$id)
+	{
+        $this->db->where('id',$id);
+        if($this->db->update('doctor', $data)){
+            return true;
+        }
+        else{return false;}
+    }
+}
