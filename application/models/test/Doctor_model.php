@@ -14,8 +14,6 @@ class Doctor_model extends CI_Model {
         else{return false;}
     }
 
-<<<<<<< HEAD
-=======
     function update_doctor($data,$id)
 	{
         $this->db->where('id',$id);
@@ -24,5 +22,4 @@ class Doctor_model extends CI_Model {
         }
         else{return false;}
     }
->>>>>>> deb06d06a442f46e6092915c5e6aabc296435eac
 }
