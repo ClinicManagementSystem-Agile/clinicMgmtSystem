@@ -20,11 +20,7 @@ class Logintest extends CI_Controller {
         
         public function verify(){
             echo" Login Test1<br/>";
-<<<<<<< HEAD
-            $username="srzal";
-=======
             $username="s2018cherry";
->>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
             echo "username:'$username'<br/>";
             $password= md5("admin");
             echo "Password:'$password'";
@@ -41,11 +37,7 @@ class Logintest extends CI_Controller {
             echo $this->unit->run($test,$expected_result,$test_name);
 
             echo" Login Test2<br/>";
-<<<<<<< HEAD
-            $username="kfkkfkd";
-=======
             $username="s2018cherry";
->>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
             echo "username:'$username'<br/>";
             $password= "admin";
             echo "Password:'$password'";

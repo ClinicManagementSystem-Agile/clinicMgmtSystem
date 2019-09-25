@@ -158,6 +158,14 @@
                             <li><a href="<?php echo base_url(); ?>patient/add_patient">Add Patient</a></li>
                         </ul>
                     </li>
+                    <li><a href="javascript:void(0);" class="menu-toggle"><i
+                                    class="fa fa-users"></i><span>Doctors</span> </a>
+                        <ul class="ml-menu">
+                            <li><a href="<?php echo base_url(); ?>doctor">View Doctors</a></li>
+                            <li><a href="<?php echo base_url(); ?>doctor/add_doctor">Add Doctor</a></li>
+                        </ul>
+                    </li>
+
 
               
 

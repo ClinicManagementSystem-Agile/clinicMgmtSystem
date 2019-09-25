@@ -14,6 +14,7 @@ class Doctor_model extends CI_Model {
         else{return false;}
     }
 
+<<<<<<< HEAD
     function show_doctor($id)
 	{
 	$this->db->where('id',$id);
@@ -24,6 +25,8 @@ class Doctor_model extends CI_Model {
 
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> 6850dd0e4f87e137c47924ce5dce33b837a29f41
     function update_doctor($data,$id)
 	{
         $this->db->where('id',$id);
@@ -32,5 +35,12 @@ class Doctor_model extends CI_Model {
         }
         else{return false;}
     }
->>>>>>> deb06d06a442f46e6092915c5e6aabc296435eac
+
+    function del_doctor($id)
+	{
+		$this->db->where('id',$id);
+		$this->db->limit(1);
+		$this->db->delete('doctor');
+		return true;
+	}
 }
