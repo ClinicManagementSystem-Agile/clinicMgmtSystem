@@ -14,6 +14,14 @@ class Doctor_model extends CI_Model {
         else{return false;}
     }
 
+    function show_doctor($id)
+	{
+	$this->db->where('id',$id);
+	$this->db->limit(1);
+	$this->db->show('doctor');
+	return true;
+	}
+
 <<<<<<< HEAD
 =======
     function update_doctor($data,$id)

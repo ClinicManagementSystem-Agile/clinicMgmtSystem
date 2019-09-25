@@ -76,4 +76,13 @@ class Doctortest extends CI_Controller {
             $test_name="Update doctor Test Case";              
             echo $this->unit->run($test,$expected_result,$test_name);            
         }
+        public function show()
+        {
+            echo" View Doctor<br/>";
+            $test= $this->patient->show_doctor('1584552');
+            $expected_result=true;
+           
+            $test_name="View Doctor Test Case";
+            echo $this->unit->run($test,$expected_result,$test_name);
+        }
     }
