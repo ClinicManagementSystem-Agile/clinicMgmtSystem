@@ -76,4 +76,21 @@ class Doctortest extends CI_Controller {
             $test_name="Update doctor Test Case";              
             echo $this->unit->run($test,$expected_result,$test_name);            
         }
+
+       
+//doctor controller for delete
+
+        public function delete()
+            {
+                echo" Delete doctor<br/>";
+                $test= $this->doctor->del_doctor('3');
+                $expected_result=true;
+               
+                $test_name="Delete doctor Test Case";
+                echo $this->unit->run($test,$expected_result,$test_name);
+
+            }
+
+
+
     }

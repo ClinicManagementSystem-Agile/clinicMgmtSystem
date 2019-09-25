@@ -22,4 +22,12 @@ class Doctor_model extends CI_Model {
         }
         else{return false;}
     }
+
+    function del_doctor($id)
+	{
+		$this->db->where('id',$id);
+		$this->db->limit(1);
+		$this->db->delete('doctor');
+		return true;
+	}
 }
