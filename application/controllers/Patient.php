@@ -6,14 +6,56 @@ class Patient extends MY_Controller {
 	{
 		parent::__construct();
 		$this->load->model('patient_model', 'patient');
-      
+       
         $this->load->library('numbertowords');
 
         //$this->load->model('vital_model', 'vital');
 		if (!$this->session->userdata('loggedin')) {redirect('user/user_login');}
 		$this->data['user'] = $this->session->userdata['loggedin'];
 	}
-	
+	public function index()
+	{
+		$this->data['patients']=$this->patient->get_patients();
+		//$patient_id = $this->data['patients']['id'];
+		$this->data['vitals'] = $this->patient->get_vitals();
+		$this->data['patient_ids'] = $this->patient->get_patient_ids_from_vital();
+		$this->data['subview']='pages/patients';
+		$this->load->view('frame', $this->data);		
+	}
+	public function deactivate_patient_list()
+	{
+		$this->data['patients']=$this->patient->get_patient_deactivated();
+		//$patient_id = $this->data['patients']['id'];
+		$this->data['vitals'] = $this->patient->get_vitals();
+		$this->data['patient_ids'] = $this->patient->get_patient_ids_from_vital();
+		$this->data['subview']='pages/deactivate_patient';
+		$this->load->view('frame', $this->data);		
+	}
+
+
+	function save_visit()
+    {
+        if(!empty($_FILES['file']) && !empty($_FILES['file']['name']) ) {
+            $file = $this->patient->save_historyimage('file');
+                $file_name = $file['file_name'];
+            }
+
+        $this->session->set_flashdata('success','patient visiting history has been saved.');
+        $this->patient->save_history($file_name);
+    }
+
+
+
+	function patient_nursing()
+    {
+        $this->data['patients']=$this->patient->get_patients_nursing();
+        //$patient_id = $this->data['patients']['id'];
+        $this->data['vitals'] = $this->patient->get_vitals();
+        $this->data['patient_ids'] = $this->patient->get_patient_ids_from_vital();
+        $this->data['subview']='pages/patients_nursing';
+        $this->load->view('frame', $this->data);
+    }
+
 	public function add_patient($id=NULL)
 	{
 		$this->data['error']='';
@@ -46,14 +88,28 @@ echo $id;
 $this->patient->upload_photo_patient($filename,$id);
 
 }
+
 	
+function checknum()
+    {
+        $num = $this->input->post('num');
+        // var_dump($med_name);
+        // exit;
+        if($num!='')
+        {
+        $numdetail = $this->patient->num_exists($num);
+        
+            $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode($numdetail));
+        }
+    }
 	public function save_patient($id=NULL)
 	{
 		//$error = '';
 		$this->form_validation->set_rules('first_name','First Name', 'required');
 		$this->form_validation->set_rules('last_name','Last Name', 'required');
 		$this->form_validation->set_rules('gender','Gender', 'required');
-		$this->form_validation->set_rules('phone','Phone No', 'is_unique[patient.phone]');
+		//$this->form_validation->set_rules('phone','Phone No', 'is_unique[patient.phone]');
 		//$this->form_validation->set_rules('email','Email', 'valid_email');
 		//$this->form_validation->set_rules('vat_no','Patient Old Id', 'is_unique[patient.vat_no]');
 		if ($this->form_validation->run() == FALSE)
@@ -133,6 +189,56 @@ $this->patient->upload_photo_patient($filename,$id);
 		}
 	}
 	
-	
+	function delete_file($id) {
+           
+        if ($this->patient->delete_file($id)) {
+            $this->session->set_flashdata('del', 'File Has been deleted');
+            redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            $this->session->set_flashdata('error', 'Error occured during delete File');
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+	function delete_patient($id)
+	{
+		if($this->patient->del_patient($id)){
+            $this->session->set_flashdata('del', 'The selected patient\'s profile has been deleted');
+            redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            $this->session->set_flashdata('error', 'Error occured during delete patient profile');
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+	}
+	function delete_pic($id){
+		if ($this->patient->delete_pic($id)) {
+            $this->session->set_flashdata('success', 'Picture Has been deleted');
+            redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            $this->session->set_flashdata('error', 'Error occured during delete Image');
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+	}
+	function delete_spouse_pic($id){
+		if ($this->patient->delete_spouse_pic($id)) {
+            $this->session->set_flashdata('success', 'Picture Has been deleted');
+            redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            $this->session->set_flashdata('error', 'Error occured during delete Image');
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+	}
+	function deactivate_patient()
+	{$id=$_GET["id"];
+	$reason=$_GET["reason"];
+		
+		if($this->patient->deactivate_patient($id,$reason)){
+            $this->session->set_flashdata('del', 'The selected patient\'s  has been deactivated successfully');
+            redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            $this->session->set_flashdata('error', 'Error occured during deactivating patient ');
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+	}
+
 	
 }

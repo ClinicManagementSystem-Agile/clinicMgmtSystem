@@ -5,9 +5,94 @@ class Patient_model extends CI_Model {
 		parent::__construct();
 		$this->load->library('upload');
 	}
+	function get_patients()
+	{
+        $this->db->order_by('id','desc');
+        $this->db->where('status','1');
+        $query=$this->db->get('patient');
+		return $query->result_array();
+	}
+		function get_patient_deactivated()
+	{
+        $this->db->order_by('id','desc');
+        $this->db->where('status','0');
+        $query=$this->db->get('patient');
+		return $query->result_array();
+	}
 	
 	
-	
+
+
+
+    function get_patients_nursing()
+    {
+		$this->db->order_by('id', 'desc');
+        $this->db->select('patient.*,bill.id as bid,bill.status as bstatus');
+        //$this->db->order_by('bill.created_date','desc');
+        $this->db->group_by('patient.first_name');
+        $this->db->join('bill','bill.patient_id=patient.id','left');
+        $query=$this->db->get('patient');
+        return $query->result_array();
+    }
+
+
+ function get_patient_ledger_id($patient_id)
+    {
+        $id='patient_id-'.$patient_id;
+        $this->db->where('other_info', $id);
+        $query = $this->db->get('ledger');
+        $result = $query->row();
+
+        return $result;
+    }
+    
+    function get_vitals()
+	{
+		$query=$this->db->get('vitals');
+		$result = $query->result_array();
+		return $result;
+	}
+
+	function get_patient_ids_from_vital()
+	{
+		$this->db->select('patient_id');
+		$this->db->from('vitals');
+		$query =$this->db->get();
+		return $query->result();
+	}
+
+	function get_patient_by_id($id)
+	{
+		$this->db->where('id', $id);
+		$query = $this->db->get('patient');
+		return $query->row();
+	}
+	function get_file_by_id($id)
+	{
+		$this->db->where('id', $id);
+		$query = $this->db->get('patient_file');
+		return $query->row();
+	}
+	function get_vital_by_id($patient_id)
+	{
+		$this->db->where('patient_id', $patient_id);
+		$query = $this->db->get('vitals');
+		return $query->result();		
+	}
+
+    function get_vital_by_appid($app_id,$patient_id)
+    {
+        $this->db->where('appid', $app_id);
+        $this->db->where('patient_id', $patient_id);
+        $query = $this->db->get('vitals');
+        return $query->result();
+    }
+	function get_patient_files($id)
+	{
+		$this->db->where('patient_id', $id);
+		$query = $this->db->get('patient_file');
+		return $query->result_array();
+	}
 	   function upload_photo_patient($filename,$id)
     {
         $data = array(
@@ -179,11 +264,26 @@ public function upload_doc($filename=NULL,$id){
          // }
     }
 
-    
+    function get_appointment_by_patientid($id)
+    {
+        $this->db->where('status', 'used');
+        $this->db->where('patient_id', $id);
+        $query = $this->db->get('appointment');
+        return $query->result_array();
+
+    }
+
+    function get_visit_by_id($appid)
+    {
+        $this->db->where('appid', $appid);
+        $query = $this->db->get('visit_files');
+        return $query->result_array();
+    }
 
 
 	function save_patient($id=null,$photo,$spouse_photo)
 	{
+		
 	if ($id !=null){
 		$register_date = $this->get_patient_by_id($id)->register_date;
 		if($register_date == '0000-00-00'){ $register_date = date('Y-m-d');}
@@ -191,7 +291,7 @@ public function upload_doc($filename=NULL,$id){
 		$register_date = date('Y-m-d');
 	}
 	$data = array(
-                'id'=>$this->input->post('vat_no'),
+               
 		'first_name'=>$this->input->post('first_name'),
 		'last_name'=>$this->input->post('last_name'),
 		'dob'=>$this->input->post('dob'),
@@ -212,6 +312,7 @@ public function upload_doc($filename=NULL,$id){
 		'spouse_photo' => isset($spouse_photo)? $spouse_photo:'',
 		);
 	if ($id !=null){
+		
 		$this->db->where('id',$id);
 		return $this->db->update('patient',$data);				
 	} else {
@@ -234,5 +335,89 @@ public function upload_doc($filename=NULL,$id){
 	}
 	
 	
+	function del_patient($id)
+	{
+		$this->db->where('id',$id);
+		$this->db->limit(1);
+		$this->db->delete('patient');
+		return true;
+	}
+	function delete_pic($id)
+    {
+		$data=array('photo'=>'');
+		$image = $this->get_patient_by_id($id)->photo;
+		$this->db->where('id', $id);
+		if($this->db->update('patient', $data)):
+		@unlink('./assets/upload/patient_img/'.$image);
+		return true;
+		else:
+			return false;
+		endif;
+    }
+	function delete_file($id)
+    {
+		//$data=array('file'=>'');
+		$doc = $this->get_file_by_id($id)->file;
+		$this->db->where('id', $id);
+		if($this->db->delete('patient_file')):
+		@unlink('./assets/upload/patient_documents/'.$doc);
+		return true;
+		else:
+			return false;
+		endif;
+    }
+	function delete_spouse_pic($id)
+    {
+		$data=array('spouse_photo'=>'');
+		$image = $this->get_patient_by_id($id)->spouse_photo;
+		$this->db->where('id', $id);
+		if($this->db->update('patient', $data)):
+		@unlink('./assets/upload/patient_img/'.$image);
+		return true;
+		else:
+			return false;
+		endif;
+    }
+
+
+    function get_patient_payment($patient_id)
+   {
+       $this->db->select('sum(total) as bill_total');
+       $this->db->where('patient_id',$patient_id);
+       $this->db->order_by('bill_date', 'desc');
+       $query = $this->db->get('bill');
+       $total_bill = $query->row()->bill_total;
+
+       $this->db->select('sum(amount) as total_receipt');
+       $this->db->where('patient_id',$patient_id);
+       $this->db->order_by('receipt_date', 'desc');
+       $query = $this->db->get('receipts');
+       $total_receipt = $query->row()->total_receipt;
+
+       $total = $total_bill-$total_receipt;
+       return $total;
+
+   }
+   function deactivate_patient($id,$reason)
+	{
+	
+		 $date=date('Y-m-d H:i:s');
+		$data = array(
+    
+		'status'=>'0',
+		'deactivate_reason'=>$reason,
+		'deactivate_date'=>$date,
+		'deactivated_by'=>$this->session->userdata['loggedin']['user_id'],
+		
+		);
+	
+		$this->db->where('id',$id);
+		 if($this->db->update('patient',$data)){
+		 	return true;
+		 }else{
+		 	return false;
+		 }
+	
+	}
 
 }
