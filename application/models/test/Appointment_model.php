@@ -23,8 +23,9 @@ class Appointment_model extends CI_Model
         if($this->db->update('appointment', $data)){
             return true;
         }
-        else{return false;
-        }
+        else{return false;}
+    }
+
         function get_appointment()
         {
                 $this->db->order_by('id','desc');
@@ -32,9 +33,13 @@ class Appointment_model extends CI_Model
                 return $query->result() ? true :  false;
     
         }
+    
+	function get_appointment_byId($id)
+    {
+        $this->db->where('id',$id);
+        $query = $this->db->get('appointment');
+        return $query->result() ? true :  false;
+
     }
-
-   
-
 
 }
