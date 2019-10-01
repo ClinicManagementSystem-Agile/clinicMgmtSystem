@@ -25,6 +25,13 @@ class Appointment_model extends CI_Model
         }
         else{return false;
         }
+        function get_appointment()
+        {
+                $this->db->order_by('id','desc');
+                $query = $this->db->get('appointment');
+                return $query->result() ? true :  false;
+    
+        }
     }
 
    
