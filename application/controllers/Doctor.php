@@ -73,7 +73,64 @@ class Doctor extends MY_Controller {
 		}
 	}
 
-	
+	public function edit_doctor($id=null)
+	{
+	    $this->data['id'] =$id;
+		$this->data['error']='';
+		$this->data['doctor']=$this->doctor_model->get_doctor_by_id($id);
+        $this->data['availables']=$this->doctor_model->get_availability_by_id($id);
+        $this->data['days'] = $this->doctor_model->get_days();
+        $this->data['times'] = $this->doctor_model->get_times();
+
+        $this->data['subview']='pages/edit-doctor';
+		$this->load->view('frame', $this->data);
+	}
+	function update_doctor()
+	{
+		$id = $this->input->post('id');
+		$error = '';
+		$this->form_validation->set_rules('firstname','First Name', 'required');
+		$this->form_validation->set_rules('lastname','Last Name', 'required');
+		$this->form_validation->set_rules('gender','Gender', 'required');
+		$this->form_validation->set_rules('speciality','Speciality', 'required');
+		$this->form_validation->set_rules('phone','Phone No', 'required');
+		//$this->form_validation->set_rules('email','Email', 'required');
+		//$this->form_validation->set_rules('address','Address', 'required');
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->data['subview']='pages/edit-doctor';
+			$this->load->view('frame', $this->data);
+		}
+		else
+		{
+		if(!empty($_FILES['dr_photo']) && !empty($_FILES['dr_photo']['name']) ) {
+			$image = $this->doctor_model->save_photo('dr_photo');
+			if(!empty($image['error']))
+			{
+			$error = $image['error'];
+			$this->session->set_flashdata('error','Uploaded image is too large, resize the image and upload image again, max size 2mb');
+			redirect('doctor/edit_doctor/'.$id.'');
+			}
+			$photo = $image['file_name'];
+		}elseif($this->input->post('old_image'))
+                {
+                    $photo =  $this->input->post('old_image');
+                }
+		else{
+			$photo = '';
+		}
+		if($this->doctor_model->save_doctor($id,$photo))
+		{
+
+					$this->session->set_flashdata('success','Doctor profile has been updated.');
+			redirect('doctor/');
+		}else{
+			$this->session->set_flashdata('error','There is an error during updating doctor profile');
+			redirect('doctor/');
+			//redirect($_SERVER['HTTP_REFERER']);
+		}
+		}
+	}
 	function delete_photo($id) {
 
         if ($this->doctor_model->delete_photo($id)) {

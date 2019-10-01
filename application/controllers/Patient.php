@@ -6,13 +6,25 @@ class Patient extends MY_Controller {
 	{
 		parent::__construct();
 		$this->load->model('patient_model', 'patient');
+<<<<<<< HEAD
        
+=======
+<<<<<<< HEAD
+       
+=======
+      
+>>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
+>>>>>>> master
         $this->load->library('numbertowords');
 
         //$this->load->model('vital_model', 'vital');
 		if (!$this->session->userdata('loggedin')) {redirect('user/user_login');}
 		$this->data['user'] = $this->session->userdata['loggedin'];
 	}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
 	public function index()
 	{
 		$this->data['patients']=$this->patient->get_patients();
@@ -56,6 +68,12 @@ class Patient extends MY_Controller {
         $this->load->view('frame', $this->data);
     }
 
+<<<<<<< HEAD
+=======
+=======
+	
+>>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
+>>>>>>> master
 	public function add_patient($id=NULL)
 	{
 		$this->data['error']='';
@@ -88,6 +106,7 @@ echo $id;
 $this->patient->upload_photo_patient($filename,$id);
 
 }
+<<<<<<< HEAD
 
 	
 function checknum()
@@ -103,6 +122,27 @@ function checknum()
             $this->output->set_output(json_encode($numdetail));
         }
     }
+=======
+<<<<<<< HEAD
+
+	
+function checknum()
+    {
+        $num = $this->input->post('num');
+        // var_dump($med_name);
+        // exit;
+        if($num!='')
+        {
+        $numdetail = $this->patient->num_exists($num);
+        
+            $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode($numdetail));
+        }
+    }
+=======
+	
+>>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
+>>>>>>> master
 	public function save_patient($id=NULL)
 	{
 		//$error = '';
@@ -189,6 +229,10 @@ function checknum()
 		}
 	}
 	
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
 	function delete_file($id) {
            
         if ($this->patient->delete_file($id)) {
@@ -240,5 +284,11 @@ function checknum()
         }
 	}
 
+<<<<<<< HEAD
+=======
+=======
+	
+>>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
+>>>>>>> master
 	
 }
