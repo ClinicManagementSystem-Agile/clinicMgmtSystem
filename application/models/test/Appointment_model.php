@@ -7,7 +7,15 @@ class Appointment_model extends CI_Model
         parent::__construct();
     }
 
-    
+    function save_appointment($data)
+    {
+        if( $this->db->insert('appointment', $data)){
+            return true;
+        }
+        else{return false;}
+        
+    }
+
 
     function update_appointment($data,$id)
     {

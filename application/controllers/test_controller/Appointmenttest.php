@@ -19,7 +19,31 @@ class Appointmenttest extends CI_Controller {
         public function index()
         {
             $this->update();
+	    $this-add();	
         }
+
+	public function add(){
+            echo" appointment Add<br/>";
+           
+            $data = array(
+                'patient_id' => 5,
+                'doctor_id' => 7,
+                'date' => date('Y-m-d'),
+                'appointment_book_date' =>date('Y-m-d') ,
+                'start_time' =>'07:00',
+                'end_time' =>'08:00',
+                'status' => 'new',
+                'description' => 'New Appointment'
+            );
+           $test= $this->appointment->save_appointment($data);
+            $expected_result=true;
+           
+            $test_name="Add appointment Test Case";
+          
+            echo $this->unit->run($test,$expected_result,$test_name);
+   
+        }
+
         
         
         public function update(){
