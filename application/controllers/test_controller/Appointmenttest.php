@@ -19,7 +19,7 @@ class Appointmenttest extends CI_Controller {
         public function index()
         {
             $this->update();
-	    $this-add();	
+	    $this->add();	
         }
 
 	public function add(){
