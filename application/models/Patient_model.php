@@ -6,6 +6,9 @@ class Patient_model extends CI_Model {
 		$this->load->library('upload');
 	}
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
 	function get_patients()
 	{
         $this->db->order_by('id','desc');
@@ -94,11 +97,14 @@ class Patient_model extends CI_Model {
 		$query = $this->db->get('patient_file');
 		return $query->result_array();
 	}
+<<<<<<< HEAD
+=======
 =======
 	
 	
 	
 >>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
+>>>>>>> master
 	   function upload_photo_patient($filename,$id)
     {
         $data = array(
@@ -271,6 +277,9 @@ public function upload_doc($filename=NULL,$id){
     }
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
     function get_appointment_by_patientid($id)
     {
         $this->db->where('status', 'used');
@@ -286,13 +295,17 @@ public function upload_doc($filename=NULL,$id){
         $query = $this->db->get('visit_files');
         return $query->result_array();
     }
+<<<<<<< HEAD
+=======
 =======
     
 >>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
+>>>>>>> master
 
 
 	function save_patient($id=null,$photo,$spouse_photo)
 	{
+		
 	if ($id !=null){
 		$register_date = $this->get_patient_by_id($id)->register_date;
 		if($register_date == '0000-00-00'){ $register_date = date('Y-m-d');}
@@ -300,7 +313,7 @@ public function upload_doc($filename=NULL,$id){
 		$register_date = date('Y-m-d');
 	}
 	$data = array(
-                'id'=>$this->input->post('vat_no'),
+               
 		'first_name'=>$this->input->post('first_name'),
 		'last_name'=>$this->input->post('last_name'),
 		'dob'=>$this->input->post('dob'),
@@ -321,6 +334,7 @@ public function upload_doc($filename=NULL,$id){
 		'spouse_photo' => isset($spouse_photo)? $spouse_photo:'',
 		);
 	if ($id !=null){
+		
 		$this->db->where('id',$id);
 		return $this->db->update('patient',$data);				
 	} else {
@@ -344,6 +358,9 @@ public function upload_doc($filename=NULL,$id){
 	
 	
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
 	function del_patient($id)
 	{
 		$this->db->where('id',$id);
@@ -428,7 +445,10 @@ public function upload_doc($filename=NULL,$id){
 		 }
 	
 	}
+<<<<<<< HEAD
+=======
 =======
 >>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
+>>>>>>> master
 
 }

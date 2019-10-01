@@ -9,8 +9,12 @@ class Patient extends MY_Controller {
 <<<<<<< HEAD
        
 =======
+<<<<<<< HEAD
+       
+=======
       
 >>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
+>>>>>>> master
         $this->load->library('numbertowords');
 
         //$this->load->model('vital_model', 'vital');
@@ -18,6 +22,9 @@ class Patient extends MY_Controller {
 		$this->data['user'] = $this->session->userdata['loggedin'];
 	}
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
 	public function index()
 	{
 		$this->data['patients']=$this->patient->get_patients();
@@ -61,9 +68,12 @@ class Patient extends MY_Controller {
         $this->load->view('frame', $this->data);
     }
 
+<<<<<<< HEAD
+=======
 =======
 	
 >>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
+>>>>>>> master
 	public function add_patient($id=NULL)
 	{
 		$this->data['error']='';
@@ -113,15 +123,33 @@ function checknum()
         }
     }
 =======
+<<<<<<< HEAD
+
+	
+function checknum()
+    {
+        $num = $this->input->post('num');
+        // var_dump($med_name);
+        // exit;
+        if($num!='')
+        {
+        $numdetail = $this->patient->num_exists($num);
+        
+            $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode($numdetail));
+        }
+    }
+=======
 	
 >>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
+>>>>>>> master
 	public function save_patient($id=NULL)
 	{
 		//$error = '';
 		$this->form_validation->set_rules('first_name','First Name', 'required');
 		$this->form_validation->set_rules('last_name','Last Name', 'required');
 		$this->form_validation->set_rules('gender','Gender', 'required');
-		$this->form_validation->set_rules('phone','Phone No', 'is_unique[patient.phone]');
+		//$this->form_validation->set_rules('phone','Phone No', 'is_unique[patient.phone]');
 		//$this->form_validation->set_rules('email','Email', 'valid_email');
 		//$this->form_validation->set_rules('vat_no','Patient Old Id', 'is_unique[patient.vat_no]');
 		if ($this->form_validation->run() == FALSE)
@@ -202,6 +230,9 @@ function checknum()
 	}
 	
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
 	function delete_file($id) {
            
         if ($this->patient->delete_file($id)) {
@@ -253,8 +284,11 @@ function checknum()
         }
 	}
 
+<<<<<<< HEAD
+=======
 =======
 	
 >>>>>>> 7f373b3f0527b2071cde4bd94c173ce0240483fa
+>>>>>>> master
 	
 }
