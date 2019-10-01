@@ -57,11 +57,11 @@ class Appointmenttest extends CI_Controller {
                     'appointment_book_date' =>date('Y-m-d') ,
                     'start_time' =>'07:00',
                     'end_time' =>'08:00',
-                    'status' => 'old',
+                    'status' => 'new',
                     'description' => 'Update Appointment'
                 );
     
-               $test= $this->appointment->update_appointment($data,'19');
+               $test= $this->appointment->update_appointment($data,'3');
                 $expected_result=true;
                
                 $test_name="Update appointment Test Case";
