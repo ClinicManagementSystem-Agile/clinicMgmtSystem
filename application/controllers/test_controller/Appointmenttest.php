@@ -19,7 +19,8 @@ class Appointmenttest extends CI_Controller {
         public function index()
         {
             $this->update();
-	    $this-add();	
+        $this->add();
+        $this->list();	
         }
 
 	public function add(){
@@ -69,6 +70,17 @@ class Appointmenttest extends CI_Controller {
                 echo $this->unit->run($test,$expected_result,$test_name);
     
               
+            }
+            public function list()
+            {
+                echo" List appointment<br/>";
+                $test= $this->appointment->get_appointment();
+                
+                $expected_result=true;
+               
+                $test_name="List appointment Test Case";
+                echo $this->unit->run($test,$expected_result,$test_name);
+
             }
 
           
