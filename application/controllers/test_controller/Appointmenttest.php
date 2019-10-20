@@ -23,7 +23,8 @@ class Appointmenttest extends CI_Controller {
 	    $this->add();	
 =======
         $this->add();
-        $this->list();	
+        $this->list();
+	$this->getById();	
 >>>>>>> f07980f1acdd5fe584cf3ee7fa654cc9cbc7848a
         }
 
@@ -83,6 +84,18 @@ class Appointmenttest extends CI_Controller {
                 $expected_result=true;
                
                 $test_name="List appointment Test Case";
+                echo $this->unit->run($test,$expected_result,$test_name);
+
+            }
+	
+		 public function getById()
+            {
+                echo" Individual appointment<br/>";
+                $test= $this->appointment->get_appointment_byId('19');
+                
+                $expected_result=true;
+               
+                $test_name="Individual appointment Test Case";
                 echo $this->unit->run($test,$expected_result,$test_name);
 
             }
