@@ -29,11 +29,11 @@
                     <?php } ?>
 
                     <br>
-                    <a style="text-decoration: none">
+                    <!-- <a style="text-decoration: none">
                         <span style="text-align:center" class=" label label-success">
                             <i class="fa fa-envelope fa-lg">Send SMS</i>
                         </span>						
-                    </a> &nbsp; &nbsp; &nbsp;
+                    </a> &nbsp; &nbsp; &nbsp; -->
 					<a href="<?php echo base_url();?>patient/add_patient/<?php echo $patient->id;?>"> Edit profile <i class="fa fa-edit"></i></a>
                        <a href="<?php echo base_url(); ?>patient/upload_photo/<?php echo $patient->id; ?>" style="margin-left:5px;"> 
                         <span style="text-align:center" class=" label label-success">          
@@ -121,7 +121,7 @@
                                                                       aria-expanded="false">Overview</a></li>
                             <li role="presentation" class=""><a href="#timeline" data-toggle="tab" aria-expanded="true">Visit
                                     History</a></li>
-                            <li role="presentation"><a href="#report-chart" data-toggle="tab" aria-expanded="true">Patient Service/product ledger details</a></li>
+                            <!-- <li role="presentation"><a href="#report-chart" data-toggle="tab" aria-expanded="true">Patient Service/product ledger details</a></li> -->
 
                             <!--<li role="presentation"><a href="#pharmacy-chart" data-toggle="tab" aria-expanded="true"> Pharmacy Billing
                                     Details</a></li>--->
@@ -132,7 +132,7 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade" id="report-chart">
 
-    <?php $this->load->view('ledger/patient_ledger'); ?>
+    <?php //$this->load->view('ledger/patient_ledger'); ?>
 
                                 <div id="real_time_chart" class="flot-chart"></div>
                             </div>
@@ -141,7 +141,7 @@
 
                             <div role="tabpanel" class="tab-pane fade" id="pharmacy-chart">
 
-    <?php $this->load->view('ledger/view_patient_product'); ?>
+    <?php //$this->load->view('ledger/view_patient_product'); ?>
 
                                 <div id="real_time_chart" class="flot-chart"></div>
                             </div>
@@ -155,62 +155,7 @@
                                             <p><?php echo $patient->remark; ?></p>
                                         </div>
                                         <hr>
-		  <!--  <div class="post-box">
-				<h4>General Report</h4>
-				<div class="body p-l-0 p-r-0">
-					<ul class="list-unstyled">
-						<li>
-							<div>Blood Pressure</div>
-							<div class="progress">
-								<div class="progress-bar progress-bar-success progress-bar-striped active"
-									 role="progressbar" aria-valuenow="40" aria-valuemin="0"
-									 aria-valuemax="100" style="width: 40%"><span
-											class="sr-only">40% Complete (success)</span>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div>Heart Beat</div>
-							<div class="progress">
-								<div class="progress-bar progress-bar-info progress-bar-striped active"
-									 role="progressbar" aria-valuenow="20" aria-valuemin="0"
-									 aria-valuemax="100" style="width: 20%"><span
-											class="sr-only">20% Complete</span></div>
-							</div>
-						</li>
-						<li>
-							<div>Haemoglobin</div>
-							<div class="progress">
-								<div class="progress-bar progress-bar-warning progress-bar-striped active"
-									 role="progressbar" aria-valuenow="60" aria-valuemin="0"
-									 aria-valuemax="100" style="width: 60%"><span
-											class="sr-only">60% Complete (warning)</span>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div>Sugar</div>
-							<div class="progress">
-								<div class="progress-bar progress-bar-danger progress-bar-striped active"
-									 role="progressbar" aria-valuenow="80" aria-valuemin="0"
-									 aria-valuemax="100" style="width: 80%"><span
-											class="sr-only">80% Complete (danger)</span>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>-->
-						<!--<hr>
-						<h4>Education</h4>
-						<ul class="dis">
-							<li>B.Com from Ski University</li>
-							<li>In hac habitasse platea dictumst.</li>
-							<li>In hac habitasse platea dictumst.</li>
-							<li>Vivamus elementum semper nisi.</li>
-							<li>Praesent ac sem eget est egestas volutpat.</li>
-						</ul>
-						<hr>-->
+		
                                         <h4>Past Visit History</h4>
                                         <ul class="dis">
                                             <?php
@@ -226,7 +171,9 @@
                                                     echo $nameOfDay . ' ' . $app['date'] . ' ' . $app['start_time']; ?>
                                                     with
                                                     <?php
-                                                    $doctor = $this->doctor->get_doctor_by_id($app['doctor_id']);
+                                                     $ci =& get_instance();
+                                                     $ci->load->model('doctor_model','doctor');
+                                                    $doctor = $ci->doctor->get_doctor_by_id($app['doctor_id']);
                                                     echo $doctor->first_name . ' ' . $doctor->last_name;
                                                     ?></li>
 
@@ -278,7 +225,9 @@
                                                         
                                                         &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
                                                         Appointment with <strong><?php
-                                                            $doctor = $this->doctor->get_doctor_by_id($app['doctor_id']);
+                                                         $ci =& get_instance();
+                                                         $ci->load->model('doctor_model','doctor');
+                                                            $doctor = $ci->doctor->get_doctor_by_id($app['doctor_id']);
                                                             echo $doctor->first_name . ' ' . $doctor->last_name; ?></strong>
                                                     </div>
                                                     <div class="panel-body">
@@ -293,7 +242,9 @@
                    <?php
                    
                    // $patient_vitals=  $this->vital->get_vital_by_patid($patient->id,$app['id']);
-                     $patient_vitals=  $this->vital->get_vital_by_appid($app['id']);
+                   $ci =& get_instance();
+                   $ci->load->model('vital_model','vital');
+                     $patient_vitals=  $ci->vital->get_vital_by_appid($app['id']);
                    
                    
                    if (count($patient_vitals)>0){ ?>
@@ -310,7 +261,7 @@
 								<?php
                                                                 
                                                                 
-                                                               $vitalshere=   $this->vital->get_vital_details_by_id( $patient_vitals->id);
+                                                               $vitalshere=   $this->vital->get_vital_details_by_id( $patient_vitals[0]['id']);
                                                                 
                                                                 $i=0; $count = count($vitalshere); foreach($vitalshere as $vrow): $i++;if ($vrow['value']=='') continue;  ?>
                                     <td style="text-align:center;font-size:11px;" ><strong><?php echo $vrow['name'];?></strong><br><?php echo $vrow['value'];?></td>

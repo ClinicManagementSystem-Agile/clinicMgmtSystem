@@ -5,7 +5,8 @@ class Patient extends MY_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('patient_model', 'patient');
+        $this->load->model('patient_model', 'patient');
+        $this->load->model('vital_model', 'vital');
        
         $this->load->library('numbertowords');
 
@@ -238,6 +239,33 @@ function checknum()
             $this->session->set_flashdata('error', 'Error occured during deactivating patient ');
             redirect($_SERVER['HTTP_REFERER']);
         }
+    }
+    
+    public function patient_profile($id=NUll)
+	{
+        $this->data['appointments'] = $this->patient->get_appointment_by_patientid($id);
+       
+       // print_r($this->data['appointments']);
+	    $this->data['patient'] = $this->patient->get_patient_by_id($id);
+           // print_r($this->data['patient']);
+            
+		$this->data['patient_files'] = $this->patient->get_patient_files($id);
+       
+          $this->data['parent_vital']=$this->vital->parent_vital();
+         
+        $this->data['vital'] = $this->vital->get_vital_by_patid($id);
+       
+	    if($this->data['vital'])
+        {
+            $vid = $this->data['vital']->id;
+        }
+        else{
+	        $vid=NULL;
+        }
+        //$this->data['vitals'] = $this->vital->get_vital_details_by_id($vid);
+
+		$this->data['subview']='pages/patient-profile';
+		$this->load->view('frame', $this->data);		
 	}
 
 	

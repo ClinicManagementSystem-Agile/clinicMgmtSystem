@@ -98,9 +98,9 @@
 
                                                 <a href="<?php echo base_url();?>patient/add_patient/<?php echo $patient['id'];?>" class="edit green"><i class="fa fa-pencil-square-o fa-lg"></i></a>
 												<br> <br>
-                                                                                                <?php $ledger = $this->patient->get_patient_ledger_id($patient['id']); 
-                                                                                                if(isset($ledger) && $ledger != null){ $ledger_id=$ledger->id; }else { $ledger_id="";}
-                                                                                                ?>
+                                                                                    
+                                                                                                 <a href="<?php echo base_url();?>appointment/index/<?php echo $patient['id'];?>" target='_blank'>Book appointment</a>
+                                                                                                   
 
                                                                                                   <br> <br>                                                                           
                         <!--   <a href="<?php echo base_url();?>patient/deactivate_patient/<?php echo $patient['id'];?>" onclick="return confirm('Are you sure, want to deactivate this patient?')">
