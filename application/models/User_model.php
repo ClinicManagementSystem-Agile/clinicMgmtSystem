@@ -3,11 +3,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class User_model extends CI_Model {
 	function __construct() {
 	parent::__construct();
-    }
+	}
 
-    public function login($cond)
+
+	function get_users()
+    {
+		$this->db->order_by('id','desc');
+        $query = $this->db->get('users');
+        $result = $query->result_array();    
+        return $result;
+    }
+	public function get_user_by_id($id)
 	{
-		
+		$this->db->where('id', $id);
+        $query = $this->db->get('users');
+        $result = $query->row();
+        return $result;
+	}
+	
+	
+	
+	public function login()
+	{
+		$cond = array(
+			'username'=>$this->input->post('username'),
+			'password'=>md5($this->input->post('password'))
+			);
 		$this->db->where($cond);
 		$query=$this->db->get('users');
 		$result=$query->num_rows();
@@ -17,42 +38,24 @@ class User_model extends CI_Model {
 			return false;
 		}
 	}
-
-	function get_user()
-    {
-        $res=$this->db->get('users');
-        return $res->result() ? true :  false;
-        
-    }
-    function get_user_byId($id)
-    {
-        $this->db->where('id',$id);
-        $res=$this->db->get('users');
-        return $res->result() ? true :  false;
-        
-    }
-	
-    function save_user($data)
+	public function user_info($username)
 	{
-        if($this->db->insert('users', $data)){
-            return true;
+        $this->db->where('username',$username);
+        //$this->db->limit(1);
+        $query = $this->db->get('users');
+        if ($query->num_rows() == 1) {
+            return $query->result();
+        } else {
+            return false;
         }
-        else{return false;}
-    }
-    function update_user($data,$id)
-	{
-        $this->db->where('id',$id);
-        if($this->db->update('users', $data)){
-            return true;
-        }
-        else{return false;}
-    }
-
-    function del_user($id)
+	}
+	function get_dept_by_id($id)
 	{
 		$this->db->where('id',$id);
-		$this->db->limit(1);
-		$this->db->delete('users');
-		return true;
+		$query = $this->db->get('department');
+		$result = $query->row();
+		return $result;
 	}
+	
+
 }
