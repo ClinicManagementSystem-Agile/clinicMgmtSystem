@@ -7,6 +7,7 @@ class Appointment extends MY_Controller
         $this->load->model('appointment_model');
         $this->load->model('doctor_model');
         $this->load->model('patient_model');
+        $this->load->model('home_model');
 		if (!$this->session->userdata('loggedin')) {redirect('user/user_login');}
         $this->data['page'] = 'appointment';
     
@@ -17,6 +18,8 @@ class Appointment extends MY_Controller
 
     function index($patient_id=NULL)
     {
+        $this->data['patients'] = $this->home_model->get_patients();
+		$this->data['appointments'] = $this->home_model->get_appointments();
            $this->data['patient_id'] = $patient_id; 
         
 
@@ -25,6 +28,8 @@ class Appointment extends MY_Controller
     }
     
     function list_today_appointments(){
+        $this->data['patients'] = $this->home_model->get_patients();
+		$this->data['appointments'] = $this->home_model->get_appointments();
         $this->data['todayappointments'] = $this->appointment_model->get_today_appointment();
 
         $this->data['subview']='appointment/list_appointments';
@@ -34,6 +39,8 @@ class Appointment extends MY_Controller
     }
     
     function view_all_appointment(){
+        $this->data['patients'] = $this->home_model->get_patients();
+		$this->data['appointments'] = $this->home_model->get_appointments();
 
         $this->data['appointments'] = $this->appointment_model->get_all_appointments();
       
@@ -252,6 +259,8 @@ else
 
     function view_appointment()
     {
+        $this->data['patients'] = $this->home_model->get_patients();
+		$this->data['appointments'] = $this->home_model->get_appointments();
         $this->data['subview']='appointment/view_appointment_today';
         $this->load->view('frame', $this->data);
 

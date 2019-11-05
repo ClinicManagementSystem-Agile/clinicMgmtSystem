@@ -7,6 +7,7 @@ class Patient extends MY_Controller {
 		parent::__construct();
         $this->load->model('patient_model', 'patient');
         $this->load->model('vital_model', 'vital');
+        $this->load->model('home_model');
        
         $this->load->library('numbertowords');
 
@@ -16,6 +17,8 @@ class Patient extends MY_Controller {
 	}
 	public function index()
 	{
+        $this->data['patients'] = $this->home_model->get_patients();
+		$this->data['appointments'] = $this->home_model->get_appointments();
 		$this->data['patients']=$this->patient->get_patients();
 		//$patient_id = $this->data['patients']['id'];
 		$this->data['vitals'] = $this->patient->get_vitals();
@@ -25,6 +28,8 @@ class Patient extends MY_Controller {
 	}
 	public function deactivate_patient_list()
 	{
+        $this->data['patients'] = $this->home_model->get_patients();
+		$this->data['appointments'] = $this->home_model->get_appointments();
 		$this->data['patients']=$this->patient->get_patient_deactivated();
 		//$patient_id = $this->data['patients']['id'];
 		$this->data['vitals'] = $this->patient->get_vitals();
@@ -49,6 +54,8 @@ class Patient extends MY_Controller {
 
 	function patient_nursing()
     {
+        $this->data['patients'] = $this->home_model->get_patients();
+		$this->data['appointments'] = $this->home_model->get_appointments();
         $this->data['patients']=$this->patient->get_patients_nursing();
         //$patient_id = $this->data['patients']['id'];
         $this->data['vitals'] = $this->patient->get_vitals();
@@ -59,6 +66,8 @@ class Patient extends MY_Controller {
 
 	public function add_patient($id=NULL)
 	{
+        $this->data['patients'] = $this->home_model->get_patients();
+		$this->data['appointments'] = $this->home_model->get_appointments();
 		$this->data['error']='';
 		if ($id !=NULL){
 		$this->data['patient'] = $this->patient->get_patient_by_id($id);
@@ -106,6 +115,8 @@ function checknum()
     }
 	public function save_patient($id=NULL)
 	{
+        $this->data['patients'] = $this->home_model->get_patients();
+		$this->data['appointments'] = $this->home_model->get_appointments();
 		//$error = '';
 		$this->form_validation->set_rules('first_name','First Name', 'required');
 		$this->form_validation->set_rules('last_name','Last Name', 'required');
@@ -243,6 +254,8 @@ function checknum()
     
     public function patient_profile($id=NUll)
 	{
+        $this->data['patients'] = $this->home_model->get_patients();
+		$this->data['appointments'] = $this->home_model->get_appointments();
         $this->data['appointments'] = $this->patient->get_appointment_by_patientid($id);
        
        // print_r($this->data['appointments']);
